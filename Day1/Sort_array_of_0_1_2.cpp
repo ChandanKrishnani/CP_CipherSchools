@@ -1,45 +1,37 @@
 #include <iostream> 
-using namespace std; 
-void sort012(int a[], int arr_size) 
-{ 
-	int lo = 0; 
-	int hi = arr_size - 1; 
-	int mid = 0; 
+#include<vector>
+using namespace std;
 
-	while (mid <= hi) { 
-		switch (a[mid]) { 
+void sort(vector <int> &arr)
+{
+    int ptr1 = 0, ptr2 = 0, ptr3 = arr.size() - 1;
+    while (ptr2 <= ptr3)
+    {
+        switch (arr[ptr2])
+        {
+        case 0:
+            swap(arr[ptr1], arr[ptr2]);
+            ptr1++;
+            ptr2++;
+            break;
+        case 1:
+            ptr2++;
+            break;
+        case 2:
+            swap(arr[ptr3], arr[ptr2]);
+            ptr3--;
+            break;
+    
+        }
+    }
+}
 
-		case 0: 
-			swap(a[lo++], a[mid++]); 
-			break; 
 
-		case 1: 
-			mid++; 
-			break; 
-
-		case 2: 
-			swap(a[mid], a[hi--]); 
-			break; 
-		} 
-	} 
-} 
-void printArray(int arr[], int arr_size) 
-{ 
-	for (int i = 0; i < arr_size; i++) 
-		cout << arr[i] << " "; 
-} 
-
-int main() 
-{ 
-	int arr[] = { 0,1,2,1,2,0 }; 
-	int n = sizeof(arr) / sizeof(arr[0]); 
-
-	sort012(arr, n); 
-
-	cout << "array after segregation "; 
-
-	printArray(arr, n); 
-
-	return 0; 
-} 
-
+int main()
+{
+   vector <int> arr = {0,1,2,1,0,2};
+   sort(arr);
+   for (int i = 0; i < arr.size(); i++) 
+        cout << arr[i] << " ";
+    return 0;
+}
