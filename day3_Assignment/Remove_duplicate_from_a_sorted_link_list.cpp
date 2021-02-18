@@ -1,79 +1,125 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-class Node {
+class Node
+{
 public:
     int data;
-    Node *nxt;
-    Node() {
-        Node(0);
-    }
-
-    Node(int data) {
-        this->data = data;
-        this->nxt = NULL;
-    }
+    Node *link;
 };
 
-void printList(Node * head) {
-    Node *ptr = head;
-    while (ptr != NULL) {
-        cout << ptr->data << "->";
-        ptr = ptr->nxt;
-    }
-    cout << "\n";
-}
 
-int getSize(Node * head) {
-    Node *ptr = head;
-    int size = 0;
-    while (ptr != NULL) {
-        size++;
-        ptr = ptr->nxt;
+class SingleLinkedList
+{
+    public:
+         Node *head;
+    SingleLinkedList()
+    {
+        head = NULL;
     }
-    return size;
-}
 
-Node * removeDuplicateSortedLL(Node * head) {
-    if (head == NULL || head->nxt == NULL)
-        return head;
-    Node * curr = head;
-    Node * nxt = NULL;
-    while (curr->nxt != NULL) {
-        if (curr->data == curr->nxt->data) {
-            nxt = curr->nxt;
-            curr->nxt = nxt->nxt;
-            delete nxt;
-        } else {
-            curr = curr->nxt;
+    void traversal()
+    {
+        if (head == NULL)
+            cout << "List is Empty !!";
+        else
+        {
+            Node *ptr = head;
+            while (ptr != NULL)
+            {
+                cout << ptr->data << " ";
+                ptr = ptr->link;
+            }
+            cout<<"\n";
         }
     }
-    return head;
 
-}
+    void InsertAtEnd(int data)
+    {
+        Node *ptr = new Node();
+        ptr->data = data;
+        if (head == NULL)
+        {
+            head = ptr;
+            ptr->link = NULL;
+        }
+        else
+        {
+            Node *temp = head;
+ 
+            while (temp->link != NULL)
+            {
+                temp = temp->link;
+            }
+            temp->link = ptr;
+            ptr->link = NULL;
+        }
+    }
 
-class SpecialNode {
-    public:
-    int data;
-    Node *nxt;
-    Node *random;
+   /* void reverse()     //iterative function for reverse//
+    {
+        if(head == NULL)
+        {
+            cout<<"List is EMPTY !!!"<<endl;
+            return ;
+        }
+        if(head -> link == NULL)
+            return ;
+        else
+        {
+            Node *curr , *next , *prev;
+            curr = head;
+            next = prev =NULL;
+            while( curr != NULL)
+            {
+                next = curr -> link;
+                curr -> link = prev;
+                prev = curr;
+                curr = next;
+            }
+            head = prev;
+        }
+    }*/
+
+    void reverseUtility()
+    {
+        recursiveReverse(head);
+    }
+
+    Node* recursiveReverse(Node *node)
+    {
+        if( node == NULL)
+            return NULL;
+        if(node -> link == NULL)
+        {
+            head = node;
+            return node;
+        }
+        Node *ptr = recursiveReverse(node->link);
+        ptr ->link = node;
+        node -> link = NULL;
+        return node;
+    }
+
 };
 
-bool isPalindromeHelper(Node ** left, Node * right) {
-    // Has the rigght pointer reached the end of LL or not?
-    if (right == NULL) {
-        return true;
-    }
-    bool isPalin = isPalindromeHelper(left, right->nxt);
-    if (!isPalin) {
-        return false;
-    }
+int main()
+{
+    SingleLinkedList obj;
 
-    bool dataEqual = ((*left)->data == right->data);
-    (*left) = (*left)->nxt;
-    return dataEqual;
-}
+    for(int i =1; i <= 10; i++)
+    {
+        obj.InsertAtEnd(i);
+    }
+    obj.traversal();
+    //obj.reverse();
+    cout<<"\nAfter Reversal::";
+    obj.reverseUtility();
+    //checking reverse LL traversal
 
-bool isPalindrome(Node * head) {
-    return isPalindromeHelper(&head, head);
+    
+    cout<<"\nWORKING FINE....";
+    obj.traversal();
+    
+    return 0;
 }
