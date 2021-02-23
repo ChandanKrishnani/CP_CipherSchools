@@ -28,7 +28,7 @@ int main()
  
     int N = 4;
  
-    cout << "The total number of ways to get the desired change is "<< count(S, n, N);
+    cout << "ways to get the desired change : "<< count(S, n, N);
  
     return 0;
 }
